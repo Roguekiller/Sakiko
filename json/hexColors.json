@@ -1,0 +1,12 @@
+{
+    "colors": {
+        "magenta": "0xff00c9",
+        "brightGreen":"0x00ff79",
+        "babyBlue":"0x95d1ff",
+        "lavendar":"0xe5c9ff",
+        "lightYellow":"0xfffec5",
+        "lightRed":"0xFF9A9A",
+        "voilent":"0xE000FF",
+        "darkPink":"0xA40D81"
+    }
+}
