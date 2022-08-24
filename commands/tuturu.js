@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { isMemberInChannel } = require('../helper/channelService');
+const { isMemberInChannel, sendEphemeralReply } = require('../helper/channelService');
 const { generateVoiceChannel } = require('../helper/voiceConnectionSerivce');
 
 module.exports = {
@@ -8,10 +8,7 @@ module.exports = {
         .setDescription('Cutest Audio File'),
     async execute(interaction) {
         const channelExists = isMemberInChannel(interaction);
-        (channelExists) ? generateVoiceChannel(channelExists)
-        : await interaction.reply({
-            content: 'No Users Connected',
-            ephemeral: true
-        });
+        (channelExists) ? generateVoiceChannel(channelExists, interaction)
+        : sendEphemeralReply(interaction, 'Join a voice channel and send the command again!');
     }
 }
