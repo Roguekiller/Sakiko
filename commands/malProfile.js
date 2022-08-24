@@ -1,9 +1,10 @@
 const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder } = require('discord.js');
-const { scrapeMALUserFavorites } = require('../api/axiosGet');
+const { getMalProfileFavorites } = require('../api/axiosGet');
 const { arrayToString, randomGenerator } = require('../helper/utilityService');
 const { sendEphemeralReply } = require('../helper/channelService');
 const { colors } = require('../json/hexColors.json');
 const path = require('node:path');
+const { scrapeMALFavoriteTitle, scrapeMALUserIcon } = require('../helper/scrapingService');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -18,11 +19,14 @@ module.exports = {
     async execute(interaction) {
         try {
             const user = interaction.options.getString('user');
-            const userFavorites = await scrapeMALUserFavorites(interaction, user, false);
-            const userIcon = await scrapeMALUserFavorites(interaction, user, true);
-            const animeString = arrayToString(userFavorites);
-            
+            const malProfile = await getMalProfileFavorites(user);
+
+            if(!malProfile) return sendEphemeralReply(interaction, `${user} might not exist. Check spelling.`);
+
+            const userFavorites = await scrapeMALFavoriteTitle(malProfile);
             if(userFavorites.length && userFavorites !== null) {
+                const animeString = arrayToString(userFavorites);
+                const userIcon = await scrapeMALUserIcon(malProfile);
                 const file = new AttachmentBuilder('../images/inoueFall.gif');
                 const embed = new EmbedBuilder()
                     .setColor(randomHex())
@@ -42,7 +46,11 @@ module.exports = {
                 sendEphemeralReply(interaction, `No favorite animie for ${user}`);
             }
         } catch(error) {
-            console.log(error);
+            if(error.code == 'ERR_BAD_REQUEST') {
+                sendEphemeralReply(interaction, `${user} doesn't exist!`);
+            } else {
+                console.log(error);
+            }
         }
     }
 }
