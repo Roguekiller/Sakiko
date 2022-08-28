@@ -12,7 +12,7 @@ function generateVoiceChannel(channel, interaction) {
     generateAudioPlayer(connection, interaction);
 }
 
-// Create a new AudioPlayer Object
+// Create a new AudioPlayer Object.
 function generateAudioPlayer(connection, interaction) {
     const player = createAudioPlayer(
     );
@@ -21,25 +21,24 @@ function generateAudioPlayer(connection, interaction) {
     onAudioStop(player, connection, interaction);
 }
 
-// Future scalable function
-function getAudioSource() {
 
-}
-
-// Current Solution
+// Return specific audio file.
 function getAudio() {
     return createAudioResource('../audio/Tuturu.mp3');
 }
 
+// Play the sound.
 function playSound(audioplayer, audioSource) {
     audioplayer.play(audioSource);
 }
 
+// Connect to a voice channel.
 function connectToVoice(player, connection) {
     connection.subscribe(player);
 
 }
 
+// Checks the audio player state status and destroys the connection if idle.
 function onAudioStop(player, connection, interaction) {
     player.on('stateChange', (oldState, newState) => { 
         if(newState.status == AudioPlayerStatus.Idle) {
@@ -49,11 +48,6 @@ function onAudioStop(player, connection, interaction) {
     });
 }
 
-function disconnectFromVoice(player, connection) {
-    
-}
-
-//exports
 module.exports = {
     generateVoiceChannel: generateVoiceChannel
 }

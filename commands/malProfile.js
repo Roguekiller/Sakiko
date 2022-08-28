@@ -6,6 +6,8 @@ const { colors } = require('../json/hexColors.json');
 const path = require('node:path');
 const { scrapeMALFavoriteTitle, scrapeMALUserIcon } = require('../helper/scrapingService');
 
+// Command for displaying the specified user MyAnimeList favorite anime.
+// Returned as a discord embed object inside of a channel.
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('mal-f')

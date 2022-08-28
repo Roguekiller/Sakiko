@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
 
-//Whenever a specific emote is used, play this sound.
 module.exports = {
     name: 'messageCreate',
     on: true,
