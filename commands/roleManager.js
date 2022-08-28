@@ -5,6 +5,8 @@ const { SS } = require('../json/roles.json');
 const { isAdmin } = require('../helper/privilegesService');
 const { sendEphemeralReply } = require('../helper/channelService');
 
+// Command to handle role managing, with subcommands to remove a role or add a role.
+// Remove role requires admin privileges and adding a role equivalent to admin requires admin.
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('role')
@@ -58,6 +60,8 @@ module.exports = {
     }
 }
 
+
+// Local function for privilege check before adding roles to user.
 async function addRole(interaction, roleName, userId){
     if(isAdmin(interaction, SS)) {
         await addRoleToUser(roleName, interaction, userId);

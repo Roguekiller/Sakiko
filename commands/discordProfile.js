@@ -14,6 +14,8 @@ module.exports = {
     ),
     async execute(interaction) {
         const targetUser = await findMemberById(interaction, interaction.options.getUser('user').id);
+
+        // Creating embedBuilder object to send to message channel.
         try {
             const embed = new EmbedBuilder()
             .setColor(0x77dfd5)
@@ -34,6 +36,7 @@ module.exports = {
     }
 }
 
+// Local function to to build a string based off of the user roles.
 async function buildString(user) {
     const array = await getUserRoles(user);
     string = '';

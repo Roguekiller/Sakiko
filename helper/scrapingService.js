@@ -1,5 +1,6 @@
 const cheerio = require('cheerio');
 
+// Scrape MAL Favorites enpoint and return an array of titles that are in the favorit anime section.
 async function scrapeMALFavoriteTitle(response) {
     const titleArray = [];
     try {
@@ -14,6 +15,7 @@ async function scrapeMALFavoriteTitle(response) {
     }
 }
 
+// Scrape MAL Favorites enpoint and return the specifc user profile picture.
 async function scrapeMALUserIcon(response) {
     try {
         const $ = cheerio.load(response.data);

@@ -5,6 +5,8 @@ const { GAP, SS } = require('../json/roles.json');
 const { findRoleOfAuthorByName, findMemberById } = require('../helper/memberService');
 const { sendUserMentionMessage } = require('../helper/memberService');
 
+// Command with subcommands for choosing a new person for the role GAP 
+// And command to remove the role GAP.
 module.exports = { 
     data: new SlashCommandBuilder()
         .setName('gap')
@@ -32,6 +34,7 @@ module.exports = {
     async execute(interaction) {
         if(findRoleOfAuthorByName(interaction, SS)) {
             const choosenSub = interaction.options.getSubcommand();
+            //If the subcommand is choosing, parse the mentions of users and choose a random person.
             if(choosenSub === 'choosing') {
                 try {
                     const userArray = parseMentions(interaction.options.getString("users"));

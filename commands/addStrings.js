@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 
+//Command returns user input back as a channel message.
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('echo')
