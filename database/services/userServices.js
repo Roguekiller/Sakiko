@@ -4,7 +4,7 @@ const { userSchema } = require('../schema/userSchema');
 const { generateUserModel } = require('../model/userModel');
 const { sendEphemeralReply } = require('../../helper/channelService');
 
-// Async function for creating the specified user in the database.
+// C - Async function for creating the specified user in the database.
 async function createUser(message, userId, userName, userModel) {
     try {
         const dbUser = new userModel({discordId: userId, userName: userName});
@@ -20,8 +20,8 @@ async function createUser(message, userId, userName, userModel) {
     }
 }
 
-// Async function for finding the user in the documents of the database.
-async function findUser(message, userName, userModel) {
+// R - Async function for finding the user in the documents of the database.
+async function findUser(userName, userModel) {
     try {
         console.log('Searching for user |' + userName + '| in the database!');
         const dbUser = await userModel.findOne({ userName: userName }).exec();
@@ -33,12 +33,33 @@ async function findUser(message, userName, userModel) {
         console.log('User |' + userName + '| not found.');
         return false;
     } catch(error) {
-        console.log('Error searching user |' +userName + '|. Error: ' + error);
+        console.log('Error searching user |' + userName + '|. Error: ' + error);
+        return null;
+    }
+}
+
+// D - Asnyc function for deleting a single user from the database.
+async function deleteUser(userName, userId, userModel) {
+    try {
+        console.log('Processing deletion for user |' + userName + '| in the database.');
+        const userExist = findUser(userName, userModel);
+        if(userExist !== null || userExist) {
+            await userModel.deleteOne({ id: userId });
+            
+            console.log('Deleted user |' + userName + '| from the database.');
+            return true;
+        } else {
+            console.log(`User |` + userName + `| doesn't exist.`);
+            return false;
+        }
+    } catch(error) {
+        console.log('Error deleting user |' + userName + '|. Error' + error);
         return null;
     }
 }
 
 module.exports = {
     createUser: createUser,
-    findUser: findUser
+    findUser: findUser,
+    deleteUser: deleteUser,
 }
