@@ -23,7 +23,7 @@ module.exports = {
                 .addUserOption((option) =>
                     option.setName('user')
                     .setDescription('Requires a user as a mention.')
-                    .setRequired(true),
+                    .setRequired(true)
                 )
         )
         .addSubcommand(subcommand =>
