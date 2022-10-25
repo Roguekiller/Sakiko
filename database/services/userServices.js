@@ -58,11 +58,6 @@ async function deleteUser(userName, userId, userModel) {
     }
 }
 
-async function setValuesNull() {
-
-}
-
-
 module.exports = {
     createUser: createUser,
     findUser: findUser,
