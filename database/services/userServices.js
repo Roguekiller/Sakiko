@@ -7,7 +7,7 @@ const { sendEphemeralReply } = require('../../helper/channelService');
 // C - Async function for creating the specified user in the database.
 async function createUser(message, userId, userName, userModel) {
     try {
-        const dbUser = new userModel({discordId: userId, userName: userName});
+        const dbUser = new userModel({discordId: userId, userName: userName, socials: undefined});
         console.log('Generating user |' + userName + '| in the database.');
         
         dbUser.save();
@@ -42,8 +42,8 @@ async function findUser(userName, userModel) {
 async function deleteUser(userName, userId, userModel) {
     try {
         console.log('Processing deletion for user |' + userName + '| in the database.');
-        const userExist = findUser(userName, userModel);
-        if(userExist !== null || userExist) {
+        const userExist = await findUser(userName, userModel);
+        if(userExist !== null && userExist) {
             await userModel.deleteOne({ id: userId });
             
             console.log('Deleted user |' + userName + '| from the database.');
@@ -57,6 +57,11 @@ async function deleteUser(userName, userId, userModel) {
         return null;
     }
 }
+
+async function setValuesNull() {
+
+}
+
 
 module.exports = {
     createUser: createUser,

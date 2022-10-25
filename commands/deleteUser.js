@@ -37,13 +37,13 @@ module.exports = {
             }
         } else {
             const isDeleted = await deleteUser(interaction.member.user.username, interaction.member.user.id, userModel);
-            userCheck(interaction, isDeleted, targetUser.username);
+            userCheck(interaction, isDeleted, interaction.member.user.username);
         }
     }
 }
 
 function userCheck(interaction, isDeleted, userName) {
-    if(isDeleted !== null || !isDeleted) {
+    if(isDeleted === null || !isDeleted) {
         sendEphemeralReply(interaction, userName + ` not registered.`);
     } else {
         sendEphemeralReply(interaction, userName + ` deleted from the database!`);
