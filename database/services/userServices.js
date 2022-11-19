@@ -10,7 +10,7 @@ async function createUser(message, userId, userName, userModel) {
         const dbUser = new userModel({discordId: userId, userName: userName, socials: undefined});
         console.log('Generating user |' + userName + '| in the database.');
         
-        dbUser.save();
+        await dbUser.save();
         
         console.log('Saved user |' + userName + '| in the database.');
         sendEphemeralReply(message, `You're registered! Thank you!`);
@@ -21,13 +21,13 @@ async function createUser(message, userId, userName, userModel) {
 }
 
 // R - Async function for finding the user in the documents of the database.
-async function findUser(userName, userModel) {
+async function findUser(userId, userName, userModel) {
     try {
         console.log('Searching for user |' + userName + '| in the database!');
-        const dbUser = await userModel.findOne({ userName: userName }).exec();
+        const dbUser = await userModel.findOne({ discordId: userId }).exec();
         if(dbUser !== null) {
-            console.log('Found user |' + userName + '| in the database.');
-            return true;
+            console.log('Found user |' + dbUser.userName + '| in the database.');
+            return dbUser;
         }
 
         console.log('User |' + userName + '| not found.');
@@ -42,9 +42,9 @@ async function findUser(userName, userModel) {
 async function deleteUser(userName, userId, userModel) {
     try {
         console.log('Processing deletion for user |' + userName + '| in the database.');
-        const userExist = await findUser(userName, userModel);
+        const userExist = await findUser(userId, userName, userModel);
         if(userExist !== null && userExist) {
-            await userModel.deleteOne({ id: userId });
+            await userModel.deleteOne({ discordId: userId });
             
             console.log('Deleted user |' + userName + '| from the database.');
             return true;
