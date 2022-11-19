@@ -25,6 +25,7 @@ module.exports = {
             )
         ),
     async execute(interaction) {
+        //Refactor to use id as opposed to using username.
         const targetUser = interaction.options.getUser('user');
         const userModel = await generateUserModel();
 

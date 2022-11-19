@@ -35,7 +35,7 @@ module.exports = {
                     .setTitle(`${user}'s MyAnimeList Profile`)
                     .setURL(`https://myanimelist.net/profile/${user}`)
                     .setAuthor({name: `${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL()})
-                    .setDescription(`${user}'s favoriete anime.`)
+                    .setDescription(`${user}'s favorite anime.`)
                     .setThumbnail(`${userIcon}`)
                     .setImage('attachment://inoueFall.gif')
                     .addFields({name:'Anime', value: animeString})

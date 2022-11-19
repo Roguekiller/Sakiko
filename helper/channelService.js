@@ -12,7 +12,14 @@ async function sendEphemeralReply(message, string) {
     });
 }
 
+async function sendEmbedMessage(message, embed) {
+    await message.reply({
+        content: {embeds: embed}
+    });
+}
+
 module.exports = {
     isMemberInChannel: isMemberInChannel,
     sendEphemeralReply: sendEphemeralReply,
+    sendEmbedMessage: sendEmbedMessage,
 }
