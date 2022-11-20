@@ -1,7 +1,3 @@
-const mongoose = require('mongoose');
-const { profileSchema } = require('../schema/profileSchema');
-const { userSchema } = require('../schema/userSchema');
-const { findUser } = require('../services/userServices');
 const { sendEphemeralReply } = require('../../helper/channelService');
 
 
