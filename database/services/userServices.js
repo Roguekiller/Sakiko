@@ -1,7 +1,4 @@
 //Service file for handling user interactions
-const mongoose = require('mongoose');
-const { userSchema } = require('../schema/userSchema');
-const { generateUserModel } = require('../model/userModel');
 const { sendEphemeralReply } = require('../../helper/channelService');
 
 // C - Async function for creating the specified user in the database.

@@ -48,6 +48,8 @@ module.exports = {
 function ifUserExistsCreateEmbed(interaction, userObject, author) {
     if(userObject.user && userObject.user !== null) {
         const socialObject = userObject.user.socials.toObject();
+        delete socialObject._id;
+        
         const embed = createEmbed(socialObject, userObject.userName, userObject.avatar, author);
         interaction.channel.send({embeds: [embed]});
         sendEphemeralReply(interaction,'Completed.');
@@ -79,11 +81,11 @@ function createEmbed(socialObject, userName, avatar, author) {
     .setThumbnail(`${avatar}`)
     .setTimestamp()
 
-    let i = 0;
     for(const social in socialObject) {
-        if(i < 5) {
+        if(socialObject[social] === null) {
+            embed.addFields({name: social, value: 'N/A'});
+        } else {
             embed.addFields({name: social, value: socialObject[social]});
-            i++;
         }
     }
 
